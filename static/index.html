@@ -7,46 +7,35 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Ancient HA">
   <meta name="theme-color" content="#f6f8fa">
-  <meta name="description" content="A lightweight Home Assistant dashboard for iPad 2.">
-  <title>Home · Ancient Home Assistant</title>
+  <meta name="description" content="A customizable Home Assistant dashboard for legacy iPad Safari.">
+  <title>Ancient Home Assistant</title>
   <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
   <link rel="apple-touch-icon" href="assets/touch-icon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <aside class="sidebar" id="sidebar">
-    <a class="brand" href="#overview"><span class="brand-icon"><img src="assets/icon.svg" width="32" height="32" alt="Ancient Home Assistant logo"></span><span>ancient home<small>ASSISTANT</small></span></a>
-    <div class="nav-caption">YOUR HOME</div>
-    <nav aria-label="Main navigation">
-      <button class="nav-item selected" data-view="overview"><span data-icon="overview"></span>Overview</button>
-      <button class="nav-item" data-view="lights"><span data-icon="bulb"></span>Lights<span class="nav-count" id="navLightCount">3</span></button>
-      <button class="nav-item" data-view="cameras"><span data-icon="camera"></span>Cameras</button>
-      <button class="nav-item" data-view="climate"><span data-icon="thermometer"></span>Climate</button>
-      <button class="nav-item" data-view="activity"><span data-icon="history"></span>Activity</button>
-    </nav>
-    <div class="sidebar-bottom">
-      <div class="demo-status"><i></i><span id="sidebarStatus">Demo home<small id="sidebarSub">Make yourself at home.</small></span></div>
-      <button class="nav-item" id="settingsButton"><span data-icon="settings"></span>Settings</button>
-      <div class="profile"><span class="avatar">H</span><span>My home<small>A smarter home, simply</small></span></div>
+  <main id="access" class="access"><div id="accessBody" class="access-card"><img class="access-logo" src="assets/icon.svg" width="58" height="58" alt="Ancient Home Assistant"><h1>Opening your dashboard…</h1></div></main>
+  <div id="app" hidden>
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#overview"><span class="brand-icon"><img src="assets/icon.svg" width="32" height="32" alt="Ancient Home Assistant logo"></span><span>ancient home<small>ASSISTANT</small></span></a>
+      <div class="nav-caption">YOUR HOME</div>
+      <nav aria-label="Main navigation">
+        <button class="nav-item selected" data-view="overview"><span data-icon="overview"></span>Overview</button>
+        <button class="nav-item" data-view="lights"><span data-icon="bulb"></span>Lights<span class="nav-count" id="navLightCount">0</span></button>
+        <button class="nav-item" data-view="cameras"><span data-icon="camera"></span>Cameras</button>
+        <button class="nav-item" data-view="climate"><span data-icon="thermometer"></span>Climate</button>
+        <button class="nav-item" data-view="activity"><span data-icon="history"></span>Activity</button>
+      </nav>
+      <div class="sidebar-bottom"><div class="home-status"><i></i><span id="sidebarStatus">Connecting…</span></div><button class="nav-item" id="settingsButton"><span data-icon="settings"></span>Settings</button></div>
+    </aside>
+    <div class="shell">
+      <header class="topbar"><button class="icon-button menu-button" id="menuButton" aria-label="Open navigation"><span data-icon="menu"></span></button><span class="breadcrumb">Your home <span>/</span> <strong id="viewTitle">Overview</strong></span><div class="top-actions"><span class="connection-pill" id="connectionBadge">Connecting…</span><button class="secondary-button edit-button" id="editButton">Edit dashboard</button><button class="icon-button" id="themeButton" aria-label="Switch to dark theme"><span data-icon="moon"></span></button><button class="icon-button" id="refreshButton" aria-label="Refresh dashboard"><span data-icon="refresh"></span></button></div></header>
+      <main class="dashboard-main"><section class="welcome"><div><div class="eyebrow" id="dateLabel"></div><h1 id="greeting"></h1><p>Your home. The way you want to see it.</p></div><div class="welcome-clock"><span id="clock">--:--</span><small>Home sweet home</small></div></section><div class="view-tabs" role="tablist" aria-label="Dashboard view"><button class="active" data-tab="overview" role="tab" aria-selected="true"><span data-icon="home"></span>Home</button><button data-tab="lights" role="tab" aria-selected="false">Lights</button><button data-tab="cameras" role="tab" aria-selected="false">Cameras</button><button data-tab="climate" role="tab" aria-selected="false">Climate</button><span class="updated" id="updatedLabel"></span></div><div id="dashboard"></div><footer><span data-icon="home"></span>Ancient hardware. A smarter home.</footer></main>
     </div>
-  </aside>
-  <div class="shell">
-    <header class="topbar">
-      <button class="icon-button menu-button" id="menuButton" aria-label="Open navigation"><span data-icon="menu"></span></button>
-      <span class="breadcrumb">Your home<span>/</span><strong id="viewTitle">Overview</strong></span>
-      <div class="top-actions"><span class="connection-pill" id="connectionBadge"><i></i>Demo mode</span><button class="icon-button" id="themeButton" aria-label="Switch to dark theme"><span data-icon="moon"></span></button><button class="icon-button" id="refreshButton" aria-label="Refresh dashboard"><span data-icon="refresh"></span></button></div>
-    </header>
-    <main>
-      <section class="welcome"><div><div class="eyebrow" id="dateLabel">SATURDAY, OCTOBER 24</div><h1 id="greeting">Welcome home <span class="greeting-sun">☀</span></h1><p>A little peace of mind. A home that's all yours.</p></div><div class="welcome-clock"><span id="clock">14:32</span><small>Home sweet home</small></div></section>
-      <div class="home-summary" id="summary"></div>
-      <div class="view-tabs" role="tablist" aria-label="Dashboard view"><button class="active" data-tab="overview" role="tab" aria-selected="true"><span data-icon="home"></span>Home</button><button data-tab="lights" role="tab" aria-selected="false">Lights</button><button data-tab="cameras" role="tab" aria-selected="false">Cameras</button><button data-tab="climate" role="tab" aria-selected="false">Climate</button><span class="updated" id="updatedLabel">Sample data · controls are interactive</span></div>
-      <div id="dashboard"></div>
-      <footer><span><span class="mini-house" data-icon="home"></span>Ancient hardware. A smarter home.</span><span id="footerMode">Built for a second life.</span></footer>
-    </main>
   </div>
-  <div class="modal-backdrop" id="modalBackdrop" hidden><section class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1"><div class="modal-head"><h2 id="modalTitle">Settings</h2><button class="icon-button" id="closeModal" aria-label="Close dialog"><span data-icon="close"></span></button></div><div id="modalBody"></div></section></div>
+  <div class="modal-backdrop" id="modalBackdrop" hidden><section class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1"><div class="modal-head"><h2 id="modalTitle"></h2><button class="icon-button" id="closeModal" aria-label="Close dialog"><span data-icon="close"></span></button></div><div id="modalBody"></div></section></div>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
-  <noscript>This dashboard needs JavaScript enabled in Safari.</noscript>
+  <noscript>Enable JavaScript in Safari to set up and use this dashboard.</noscript>
   <script src="app.js"></script>
 </body>
 </html>

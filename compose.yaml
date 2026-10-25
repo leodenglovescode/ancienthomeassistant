@@ -4,6 +4,8 @@ services:
     restart: unless-stopped
     ports:
       - "${ANCIENT_BIND_IP:-0.0.0.0}:${ANCIENT_PORT:-8095}:8095"
+    volumes:
+      - dashboard-data:/data
     read_only: true
     cap_drop:
       - ALL
@@ -17,3 +19,7 @@ services:
       options:
         max-size: "5m"
         max-file: "2"
+
+volumes:
+  dashboard-data:
+    name: ${ANCIENT_DATA_VOLUME:-ancient-home-assistant-data}
