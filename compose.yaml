@@ -1,0 +1,20 @@
+services:
+  dashboard:
+    build: .
+    image: ancient-home-assistant:local
+    restart: unless-stopped
+    ports:
+      - "${ANCIENT_BIND_IP:-0.0.0.0}:${ANCIENT_PORT:-8095}:8095"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 96
+    mem_limit: 192m
+    cpus: 1.0
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
