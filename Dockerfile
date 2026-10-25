@@ -1,4 +1,7 @@
 FROM python:3.12-alpine
+LABEL org.opencontainers.image.title="Ancient Home Assistant" \
+      org.opencontainers.image.description="A lightweight Home Assistant dashboard for older iPads." \
+      org.opencontainers.image.source="https://github.com/leodenglovescode/ancienthomeassistant"
 ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
 WORKDIR /app
 RUN addgroup -S dashboard && adduser -S -G dashboard dashboard

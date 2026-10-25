@@ -1,7 +1,6 @@
 services:
   dashboard:
-    build: .
-    image: ancient-home-assistant:local
+    image: ghcr.io/leodenglovescode/ancienthomeassistant:latest
     restart: unless-stopped
     ports:
       - "${ANCIENT_BIND_IP:-0.0.0.0}:${ANCIENT_PORT:-8095}:8095"

@@ -34,32 +34,68 @@ Cards have a fixed, configurable layout. This is an independent client, not a fu
 
 ## Quick start
 
-### Docker Compose
+### Docker one-liner
 
-Clone this repository, enter its directory, then run:
+With Docker installed, start the published image:
 
 ```sh
-docker compose up -d --build
+docker run -d --name ancient-home-assistant --restart unless-stopped -p 8095:8095 --read-only --cap-drop ALL --security-opt no-new-privileges:true ghcr.io/leodenglovescode/ancienthomeassistant:latest
+```
+
+Open `http://SERVER_LAN_IP:8095` in a browser. The server and dashboard device must be able to reach each other over the network. The image supports **Linux AMD64 and ARM64**; no repository clone or local build is needed.
+
+### Docker Compose
+
+Save the following as `compose.yaml`:
+
+```yaml
+services:
+  dashboard:
+    image: ghcr.io/leodenglovescode/ancienthomeassistant:latest
+    restart: unless-stopped
+    ports:
+      - "8095:8095"
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 96
+    mem_limit: 192m
+    cpus: 1.0
+    logging:
+      driver: json-file
+      options:
+        max-size: "5m"
+        max-file: "2"
+```
+
+Start the dashboard:
+
+```sh
+docker compose up -d
 docker compose ps
 ```
 
-Open `http://SERVER_LAN_IP:8095` in a browser. The server and dashboard device must be able to reach each other over the network.
-
-Optionally copy `.env.example` to `.env` to change the published address or port:
-
-```dotenv
-ANCIENT_BIND_IP=0.0.0.0
-ANCIENT_PORT=8095
-```
+The repository's [compose.yaml](compose.yaml) additionally supports `ANCIENT_BIND_IP` and `ANCIENT_PORT` overrides through `.env`; see [.env.example](.env.example).
 
 Docker publishes on all interfaces by default. Use a trusted LAN, or bind to a specific LAN address. Allow the selected port through the server firewall. The container runs as a non-root user with a read-only filesystem and a health check.
 
-After pulling updates, rebuild:
+To update a Compose installation:
 
 ```sh
-git pull
-docker compose up -d --build
+docker compose pull
+docker compose up -d
 ```
+
+For a `docker run` installation, pull the new image, remove the old container, and repeat the one-liner:
+
+```sh
+docker pull ghcr.io/leodenglovescode/ancienthomeassistant:latest
+docker rm -f ancient-home-assistant
+```
+
+Restarting or recreating the container ends its in-memory Home Assistant sessions; reconnect in Settings. Entity mappings remain in the browser. Use either the one-liner or Compose for a given port, not both at once.
 
 ### Python
 
@@ -107,6 +143,15 @@ The frontend targets iPad 2 / iOS 9 Safari using ES5, XMLHttpRequest, inline SVG
 Rendering and video decoding happen on the viewing device. Actual device behavior and camera playback depend on the OS version, codecs, network, and Home Assistant integration.
 
 ## Development
+
+Build a local image from source:
+
+```sh
+docker build -t ancient-home-assistant:local .
+```
+
+The [publishing workflow](.github/workflows/publish-image.yml) runs the checks below and publishes AMD64/ARM64 images to GitHub Container Registry when application source changes on `main`. `latest` tracks the current published build; `sha-<full-commit-sha>` tags identify individual builds.
+
 
 ```sh
 python3 -m unittest discover -s tests -v
