@@ -57,6 +57,24 @@ These screenshots use example entities for illustration only. The deployed appli
 
 </details>
 
+## Home Assistant app / add-on
+
+On Home Assistant OS, add this repository to the app store:
+
+```text
+https://github.com/leodenglovescode/ancienthomeassistant
+```
+
+Install **Ancient Home Assistant**, start it, and open `http://YOUR_HA_IP:7654`.
+Use the same setup wizard described above. Data is kept in Supervisor-managed
+storage and the app runs as an unprivileged user. The pinned image supports ARM64
+(including Raspberry Pi 5) and AMD64.
+
+The app uses direct LAN access for legacy Safari; Ingress and automatic Supervisor
+authentication are not included. Change the external port in Network settings if
+7654 is already in use. See the [app installation guide](ancient-dashboard/DOCS.md)
+for backups and migration from other packaging repositories.
+
 ## Docker one-liner
 
 With Docker installed:
